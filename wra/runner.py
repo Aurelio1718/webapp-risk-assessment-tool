@@ -83,16 +83,16 @@ class ToolRunner:
               workdir: str | None = None, entrypoint: str | None = None) -> list[str]:
         """Build the argv for a tool.
 
-        mounts: (host_path, container_path). In local mode container paths found in args are
+        mounts: (host_path, container_path[, "ro"]). In local mode container paths found in args are
         rewritten to the corresponding host paths, so probes can use one set of arguments.
         """
-        mounts = mounts or []
+        mounts = [tuple(m) for m in (mounts or [])]
         if any(not isinstance(a, str) for a in args):
             raise RunnerError("tool arguments must be strings")
         if self.uses_local(tool):
             out = []
             for a in args:
-                for host, cont in mounts:
+                for host, cont, *_ in mounts:
                     if a == cont or a.startswith(cont.rstrip("/") + "/"):
                         a = host + a[len(cont):]
                         break
@@ -110,8 +110,9 @@ class ToolRunner:
             raise RunnerError(f"container engine '{engine}' not found in PATH")
         cmd = [engine, "run", "--rm", *self.runtime.extra_args, *self.tool_args.get(tool, [])]
         suffix = self.volume_suffix()
-        for host, cont in mounts:
-            cmd += ["-v", f"{os.path.abspath(host)}:{cont}{suffix}"]
+        for host, cont, *opt in mounts:
+            opts = ",".join([o for o in opt if o == "ro"] + ([suffix[1:]] if suffix else []))
+            cmd += ["-v", f"{os.path.abspath(host)}:{cont}" + (f":{opts}" if opts else "")]
         if workdir:
             cmd += ["-w", workdir]
         if entrypoint:
