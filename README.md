@@ -1,16 +1,36 @@
-# webapp-risk-assessment-tool (`wra`)
+# webapp-risk-assessment-tool (`wra`) - Risk Assessment & VSPT for web applications
 
-`wra` (WebApp Risk Assessment) is a command-line tool that assesses the security of a web application
-and produces a risk assessment report where **risk = impact x likelihood** (1-5 each, risk 1-25).
+`wra` (WebApp Risk Assessment) is a command-line tool for **Vulnerability Scanning and Penetration
+Testing (VSPT)** of a web application, extended with an authorized white-box analysis of the host,
+that produces a risk assessment report where **risk = impact x likelihood** (1-5 each, risk 1-25).
 
-Given the URL of a web application and, when available, authorized access to the machine that hosts
-it, `wra` runs three analyses and merges their results into **one table**:
+**Only a URL is needed** for the VSPT part (vulnerability scanning + penetration testing):
+
+```bash
+./wra.py all -c config.ini --active --access-level none     # [target] url set, [ssh] host may be empty
+```
+
+When authorized access to the machine that hosts the application is available, `wra` adds the
+internal analysis and merges everything into **one table**:
 
 | Phase | What it does | Access needed |
 |---|---|---|
 | `external` | Black-box reconnaissance and vulnerability scanning of the URL (nmap, OWASP ZAP baseline, Nuclei, ssh-audit, native HTTP/TLS checks) | URL only |
 | `pentest` | Targeted, non-destructive verification of the external findings, with outcome (*Confirmed* / *Not confirmed*) and evidence | URL only, `--active` |
 | `internal` | White-box, read-only analysis over SSH: source code SAST (Semgrep), hard-coded secrets (trufflehog), vulnerable dependencies and Dockerfile misconfigurations (Trivy), database configuration and permissions, processes, listening services, sshd, firewall, pending updates, containers, file permissions | SSH account, or `--source` for the code only |
+
+### Assignment requirements -> implementation
+
+| Requirement | Where |
+|---|---|
+| Given the URL, analyse the application from outside and run Vulnerability Scanning | `external` phase ([sources](#6-sources-and-checks)) |
+| Penetration Testing phase, with checks, outcomes and evidence documented in the report | `pentest` phase; *Penetration test log* section of the report; [pentest catalog](docs/methodology.md#3-pentest-catalog) |
+| Access the host with authorized credentials: static analysis of the source code, database configuration and permissions, processes and services, plus extra information (web server, dependencies, containers) | `internal` phase ([access levels](#4-access-levels-and-required-permissions)) |
+| Integrate two or more sources and report external and internal results in a single table | 11 sources, merged and correlated into one table (`report.md`, `findings.csv`) |
+| For each issue: element, evidence, PT outcome, impact, likelihood, risk = impact x likelihood | table columns; every value justified in the rationale ([scoring](#7-scoring)) |
+| Works with `git clone` + README | standard library only; scanners in containers pinned by digest |
+
+An example of the full report is in [docs/sample-report.md](docs/sample-report.md).
 
 The tool is **generic**: nothing about the target is hard-coded. Every check detects whether it
 applies; checks that cannot run (missing access, missing tool, active scans disabled) are listed as
