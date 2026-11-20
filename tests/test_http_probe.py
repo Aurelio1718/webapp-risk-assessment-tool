@@ -1,6 +1,7 @@
 """Integration test of the native http-headers probe and of `wra all` against a local HTTP server."""
 import http.server
 import os
+import re
 import sys
 import tempfile
 import threading
@@ -44,6 +45,8 @@ class HttpProbeTest(unittest.TestCase):
         text = text.replace("authorized = no", f"authorized = {authorized}")
         text = text.replace("hosts = 192.168.122.93", f"hosts = {hosts}")
         text = text.replace("url = https://192.168.122.93/", f"url = http://127.0.0.1:{self.port}/")
+        # never run real third-party scanners from unit tests: tool probes become "not assessed"
+        text = re.sub(r"(?m)^([a-z-]+) = docker\.io/.*$", r"\1 = REPLACE_ME", text)
         cfg = Path(tmp) / "config.ini"
         cfg.write_text(text)
         os.chmod(cfg, 0o600)
