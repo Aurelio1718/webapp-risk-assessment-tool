@@ -1,6 +1,8 @@
 """External probe: nmap TCP connect scan, service/version detection and TLS scripts (non-intrusive)."""
 from __future__ import annotations
 
+import ipaddress
+
 from ..parsers import nmap
 from ._tools import save_run, tail
 from .base import Probe
@@ -19,6 +21,11 @@ class NmapProbe(Probe):
         cfg = ctx.config.target
         raw = ctx.store.raw_dir(self.phase)
         ports = "1-10000" + (f",{cfg.port}" if cfg.port > 10000 else "")
+        if _is_loopback(cfg.host):
+            # loopback = the auditor's own machine: scanning other ports would report the auditor's services
+            ports = str(cfg.port)
+            ctx.store.write_raw(self.phase, "nmap-scope-note.txt",
+                                f"Target {cfg.host} is a loopback address: nmap limited to port {cfg.port}.\n")
         # -sT: connect scan, works unprivileged/rootless; -Pn: host may drop ping
         args = ["-sT", "-sV", "-Pn", "-T4", "--open", "-p", ports, "--script", SCRIPTS,
                 "-oX", "/out/nmap.xml", cfg.host]
@@ -31,3 +38,12 @@ class NmapProbe(Probe):
         ctx.store.write_raw(self.phase, "nmap-services.txt", nmap.inventory(xml) + "\n")
         ev = ctx.store.write_evidence("nmap.xml", xml)
         return nmap.parse(xml, [ev], target_ports={cfg.port})
+
+
+def _is_loopback(host: str) -> bool:
+    if host.lower() in ("localhost", "localhost.localdomain"):
+        return True
+    try:
+        return ipaddress.ip_address(host).is_loopback
+    except ValueError:
+        return False
