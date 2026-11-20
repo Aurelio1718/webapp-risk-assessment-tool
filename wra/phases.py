@@ -12,6 +12,8 @@ log = logging.getLogger("wra.phase")
 
 def run_phase(ctx, phase: str) -> list[Finding]:
     probes = discover(phase)
+    if phase == "pentest":
+        ctx.pt_entries = []          # filled by verifiers (wra/pentest.py), saved below
     findings: list[Finding] = []
     coverage: list[dict] = []
     if not probes:
@@ -36,5 +38,7 @@ def run_phase(ctx, phase: str) -> list[Finding]:
             findings.append(not_assessed(p.element(ctx), p.name, phase, p.source, f"probe error: {exc}"))
             coverage.append({"probe": p.name, "source": p.source, "status": "error", "reason": str(exc)})
     ctx.store.save_findings(phase, findings)
+    if phase == "pentest":
+        ctx.store.save_pt_log(getattr(ctx, "pt_entries", []))
     ctx.store.set_coverage(phase, coverage)
     return findings
