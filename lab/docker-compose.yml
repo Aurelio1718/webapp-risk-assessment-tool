@@ -1,0 +1,13 @@
+# OWASP Juice Shop: deliberately vulnerable web application, used to see Confirmed pentest results.
+# Bound to 127.0.0.1 only: never expose it to a network.
+# Start: podman compose -f lab/docker-compose.yml up -d   (or docker compose)
+# Stop:  podman compose -f lab/docker-compose.yml down
+services:
+  juice-shop:
+    image: docker.io/bkimminich/juice-shop@sha256:69e0504ca940fe19dc6b0405d5536c9475014cc28719e795602d95e83b8d2207
+    container_name: juice-shop
+    ports:
+      - "127.0.0.1:3000:3000"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: "no"
