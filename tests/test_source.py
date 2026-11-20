@@ -192,9 +192,12 @@ class SourceTests(unittest.TestCase):
     def test_not_assessed_without_source_or_ssh(self):
         with tempfile.TemporaryDirectory() as tmp:
             c = make_ctx(tmp, "", FakeRunner({}))
+            old = c.store.raw_dir("internal") / "src-semgrep.error.txt"
+            old.write_text("stale error from a previous run")
             res = [f for f in run_phase(c, "internal") if f.check_id.startswith("not-assessed:src-")]
             self.assertEqual(len(res), 3)
             self.assertTrue(all("--source PATH" in f.title for f in res))
+            self.assertFalse(old.exists())
 
     def test_rulesets(self):
         with tempfile.TemporaryDirectory() as tmp:

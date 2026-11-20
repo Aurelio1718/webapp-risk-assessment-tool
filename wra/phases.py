@@ -18,6 +18,9 @@ def run_phase(ctx, phase: str) -> list[Finding]:
     coverage: list[dict] = []
     if not probes:
         log.warning("[%s] no probes available yet", phase)
+    stale = ctx.store.root / phase / "raw"
+    for p in probes:                 # error files of a previous run must not survive into this report
+        (stale / f"{p.name}.error.txt").unlink(missing_ok=True)
     for p in probes:
         ok, reason = p.gate(ctx)
         if not ok:
