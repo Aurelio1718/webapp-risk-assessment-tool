@@ -43,6 +43,7 @@ IMPACT_MATRIX: dict[str, tuple[int, str]] = {
     "CWE-614":  (2, "C: cookie may be sent over cleartext"),
     "CWE-1004": (2, "C: cookie readable by scripts"),
     "CWE-1275": (2, "I: cookie sent cross-site (CSRF aid)"),
+    "CWE-532":  (2, "C: sensitive information may be written to log files"),
     "CWE-16":   (2, "C/I/A: insecure configuration"),
     "CWE-1188": (2, "C/I/A: insecure default setting"),
 }
