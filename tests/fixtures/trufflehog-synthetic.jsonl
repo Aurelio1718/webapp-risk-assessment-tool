@@ -1,0 +1,4 @@
+{"level":"info-0","ts":"2026-11-20T19:57:09Z","logger":"trufflehog","msg":"running source"}
+{"SourceMetadata":{"Data":{"Filesystem":{"file":"/src/app/settings.py","line":12}}},"SourceID":1,"SourceType":15,"SourceName":"trufflehog - filesystem","DetectorType":0,"DetectorName":"Generic","DetectorDescription":"Synthetic test record","DecoderName":"PLAIN","Verified":false,"VerificationFromCache":false,"Raw":"FAKE-SECRET-VALUE-DO-NOT-REPORT","RawV2":"FAKE-SECRET-VALUE-DO-NOT-REPORT","Redacted":"FAKE-SE***","ExtraData":{"note":"FAKE-SECRET-VALUE-DO-NOT-REPORT"},"StructuredData":null}
+{"SourceMetadata":{"Data":{"Filesystem":{"file":"/src/config/prod.env","line":3}}},"SourceID":1,"SourceType":15,"SourceName":"trufflehog - filesystem","DetectorType":0,"DetectorName":"Generic","DetectorDescription":"Synthetic verified record","DecoderName":"PLAIN","Verified":true,"Raw":"FAKE-SECRET-VALUE-DO-NOT-REPORT"}
+not json at all

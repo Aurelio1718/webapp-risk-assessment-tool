@@ -1,0 +1,56 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {"Version": "0.69.3"},
+  "ArtifactName": "/src",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": "app/requirements.txt",
+      "Class": "lang-pkgs",
+      "Type": "pip",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2024-34069",
+          "PkgName": "Werkzeug",
+          "InstalledVersion": "3.0.1",
+          "FixedVersion": "3.0.3",
+          "Status": "fixed",
+          "Severity": "HIGH",
+          "CweIDs": ["CWE-352"],
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-34069",
+          "Title": "werkzeug: user may execute code on a developer's machine",
+          "Description": "The debugger in affected versions of Werkzeug can allow an attacker to execute code on a developer's machine under some circumstances.",
+          "CVSS": {"nvd": {"V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H", "V3Score": 7.5},
+                   "ghsa": {"V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H", "V3Score": 7.5}}
+        },
+        {
+          "VulnerabilityID": "GHSA-0000-synthetic",
+          "PkgName": "examplepkg",
+          "InstalledVersion": "1.0.0",
+          "Severity": "LOW",
+          "Title": "synthetic low-severity advisory without CVSS or fix"
+        }
+      ]
+    },
+    {
+      "Target": "Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {"Successes": 25, "Failures": 1},
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Resolution": "Add 'USER <non root user name>' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "Status": "FAIL",
+          "CauseMetadata": {"Provider": "Dockerfile", "Service": "general"}
+        },
+        {"ID": "DS-0001", "Title": "passed check", "Severity": "MEDIUM", "Status": "PASS"}
+      ]
+    }
+  ]
+}

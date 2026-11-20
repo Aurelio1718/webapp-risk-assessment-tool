@@ -95,6 +95,12 @@ class StubSSH:
         return ToolResult(["ssh"], 0, out, "", 0.1)
 
 
+class NoImagesRunner:
+    """Third-party tools are not available in unit tests: source probes are reported as not assessed."""
+    def image_status(self, tool):
+        return "FAIL", "no images in unit tests"
+
+
 def ctx(tmp, level="privileged"):
     cfg = SimpleNamespace(
         ssh=SimpleNamespace(host=VM, port=22, user="wra-priv"), target=SimpleNamespace(port=443, host=VM, url=f"https://{VM}/"),
@@ -103,7 +109,7 @@ def ctx(tmp, level="privileged"):
                            user="chesscoach_app", database="chesscoach", password=lambda: "pw"))
     facts = {"user": "wra-priv", "groups": ["wra-priv", "docker"], "docker": True}
     return SimpleNamespace(config=cfg, store=RunStore(Path(tmp) / "run").ensure(), ssh=StubSSH(), level=level,
-                           active=False, runner=None, access=lambda refresh=False: {"facts": facts})
+                           active=False, runner=NoImagesRunner(), source_path="", access=lambda refresh=False: {"facts": facts})
 
 
 class InternalTests(unittest.TestCase):
