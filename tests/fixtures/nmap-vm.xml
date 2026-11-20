@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.98 scan initiated Fri Nov 20 16:52:59 2026 as: /usr/bin/nmap -sT -sV -Pn -T4 -p 22,80,443 -&#45;script ssl-cert,ssl-enum-ciphers,http-title,http-server-header -oX /out/nmap-vm.xml 192.168.122.93 -->
+<nmaprun scanner="nmap" args="/usr/bin/nmap -sT -sV -Pn -T4 -p 22,80,443 -&#45;script ssl-cert,ssl-enum-ciphers,http-title,http-server-header -oX /out/nmap-vm.xml 192.168.122.93" start="1795193579" startstr="Fri Nov 20 16:52:59 2026" version="7.98" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="3" services="22,80,443"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1795193579" endtime="1795193591"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="192.168.122.93" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" product="OpenSSH" version="10.2p1 Ubuntu 2ubuntu3.7" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:10.2p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="nginx" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx</cpe></service><script id="http-title" output="Did not follow redirect to https://192.168.122.93/"><elem key="redirect_url">https://192.168.122.93/</elem>
+</script></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="nginx" tunnel="ssl" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx</cpe></service><script id="http-title" output="Welcome \xC2\xB7 Chess Coach"><elem key="title">Welcome \xC2\xB7 Chess Coach</elem>
+</script><script id="ssl-cert" output="Subject: commonName=localhost&#xa;Subject Alternative Name: DNS:localhost, IP Address:127.0.0.1&#xa;Issuer: commonName=localhost&#xa;Public Key type: ec&#xa;Public Key bits: 256&#xa;Signature Algorithm: ecdsa-with-SHA256&#xa;Not valid before: 2026-11-13T19:11:14&#xa;Not valid after:  2027-11-13T19:11:14&#xa;MD5:     4b53 7c35 b3e9 a4cf 4590 10c6 520b 3122&#xa;SHA-1:   a2f5 94c0 da5e 818a 3728 087c 5f9a 66ad c32e b689&#xa;SHA-256: 2bf0 e9a8 2da6 e0a0 b7f0 6422 2bf5 e1a0 d0cd d930 b66d bd99 141e acf7 2ee9 45ae"><table key="subject">
+<elem key="commonName">localhost</elem>
+</table>
+<table key="issuer">
+<elem key="commonName">localhost</elem>
+</table>
+<table key="pubkey">
+<elem key="type">ec</elem>
+<elem key="bits">256</elem>
+<table key="ecdhparams">
+<table key="curve_params">
+<elem key="ec_curve_type">namedcurve</elem>
+<elem key="curve">prime256v1</elem>
+</table>
+</table>
+</table>
+<table key="extensions">
+<table>
+<elem key="name">X509v3 Subject Key Identifier</elem>
+<elem key="value">25:F0:56:D2:6E:8C:1A:7C:59:27:30:DE:62:09:74:66:84:B7:C1:DD</elem>
+</table>
+<table>
+<elem key="name">X509v3 Basic Constraints</elem>
+<elem key="value">CA:TRUE</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Alternative Name</elem>
+<elem key="value">DNS:localhost, IP Address:127.0.0.1</elem>
+</table>
+<table>
+<elem key="name">X509v3 Key Usage</elem>
+<elem key="value">Digital Signature</elem>
+</table>
+<table>
+<elem key="name">X509v3 Extended Key Usage</elem>
+<elem key="value">TLS Web Server Authentication</elem>
+</table>
+</table>
+<elem key="sig_algo">ecdsa-with-SHA256</elem>
+<table key="validity">
+<elem key="notBefore">2026-11-13T19:11:14</elem>
+<elem key="notAfter">2027-11-13T19:11:14</elem>
+</table>
+<elem key="md5">4b537c35b3e9a4cf459010c6520b3122</elem>
+<elem key="sha1">a2f594c0da5e818a3728087c5f9a66adc32eb689</elem>
+<elem key="sha256">2bf0e9a82da6e0a0b7f064222bf5e1a0d0cdd930b66dbd99141eacf72ee945ae</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIBmjCCAUCgAwIBAgIUH5urnRMUIBnEqYBzOgNIfBi5ff0wCgYIKoZIzj0EAwIw&#xa;FDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTI2MTExMzE5MTExNFoXDTI3MTExMzE5&#xa;MTExNFowFDESMBAGA1UEAwwJbG9jYWxob3N0MFkwEwYHKoZIzj0CAQYIKoZIzj0D&#xa;AQcDQgAEY8WP76SJRb5oW1fuG3JqC1425cesQkwyhx/bNlCjMqk5ue0QSGm3exqa&#xa;pY3moQqqkyQDG8w2+vySYCKWUbCkUqNwMG4wHQYDVR0OBBYEFCXwVtJujBp8WScw&#xa;3mIJdGaEt8HdMA8GA1UdEwEB/wQFMAMBAf8wGgYDVR0RBBMwEYIJbG9jYWxob3N0&#xa;hwR/AAABMAsGA1UdDwQEAwIHgDATBgNVHSUEDDAKBggrBgEFBQcDATAKBggqhkjO&#xa;PQQDAgNIADBFAiAXhxUSsy9SCrgGq0i0vP5rwn/bcQ/yxSdZuCAlR1/dCgIhAMi3&#xa;96nNhoA1HWiSfjrXwOZ1AnLW2HaMoUr5g2bwF9b4&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="ssl-enum-ciphers" output="&#xa;  TLSv1.2: &#xa;    ciphers: &#xa;      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A&#xa;      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A&#xa;      TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A&#xa;    compressors: &#xa;      NULL&#xa;    cipher preference: client&#xa;  TLSv1.3: &#xa;    ciphers: &#xa;      TLS_AKE_WITH_AES_128_GCM_SHA256 (secp256r1) - A&#xa;      TLS_AKE_WITH_AES_256_GCM_SHA384 (secp256r1) - A&#xa;      TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A&#xa;    cipher preference: client&#xa;  least strength: A"><table key="TLSv1.2">
+<table key="ciphers">
+<table>
+<elem key="name">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+</table>
+<table key="compressors">
+<elem>NULL</elem>
+</table>
+<elem key="cipher preference">client</elem>
+</table>
+<table key="TLSv1.3">
+<table key="ciphers">
+<table>
+<elem key="name">TLS_AKE_WITH_AES_128_GCM_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_AKE_WITH_AES_256_GCM_SHA384</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_AKE_WITH_CHACHA20_POLY1305_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+</table>
+<elem key="cipher preference">client</elem>
+</table>
+<elem key="least strength">A</elem>
+</script></port>
+</ports>
+<times srtt="194" rttvar="2820" to="100000"/>
+</host>
+<runstats><finished time="1795193591" timestr="Fri Nov 20 16:53:11 2026" summary="Nmap done at Fri Nov 20 16:53:11 2026; 1 IP address (1 host up) scanned in 12.79 seconds" elapsed="12.79" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>
