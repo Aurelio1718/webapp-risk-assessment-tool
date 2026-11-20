@@ -1,0 +1,29 @@
+# Local configuration (may reference credentials) - never commit
+config.ini
+*.local.ini
+
+# Assessment output: contains target data and evidence - never commit
+reports/
+evidence/
+*.pem
+*.key
+id_*
+*_known_hosts
+known_hosts
+.env
+.env.*
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+output/
