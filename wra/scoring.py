@@ -30,6 +30,7 @@ IMPACT_MATRIX: dict[str, tuple[int, str]] = {
     "CWE-732":  (3, "C/I: incorrect permissions on a sensitive resource"),
     "CWE-400":  (3, "A: uncontrolled resource consumption"),
     "CWE-307":  (3, "C/I: no limit on authentication attempts"),
+    "CWE-916":  (3, "C: weak password hashing eases offline cracking of stolen hashes"),
     "CWE-942":  (3, "C: permissive CORS policy lets other origins read responses"),
     "CWE-297":  (2, "C/I: certificate name mismatch, clients learn to ignore TLS errors"),
     "CWE-327":  (2, "C/I: weak or deprecated cryptographic algorithm offered"),

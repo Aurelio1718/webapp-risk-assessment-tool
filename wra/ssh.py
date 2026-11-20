@@ -41,8 +41,9 @@ class SSHClient:
             "--", c.host,
         ]
 
-    def run(self, remote_cmd: str, timeout: int = 120) -> ToolResult:
-        return ToolRunner.execute(self.base_cmd() + [remote_cmd], timeout=timeout)
+    def run(self, remote_cmd: str, timeout: int = 120, input_text: str | None = None) -> ToolResult:
+        """input_text goes to the remote script's stdin (used for secrets: never on a command line)."""
+        return ToolRunner.execute(self.base_cmd() + [remote_cmd], timeout=timeout, input_text=input_text)
 
     def target(self) -> str:
         return f"{self.cfg.user}@{self.cfg.host}:{self.cfg.port}"
