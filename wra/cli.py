@@ -23,7 +23,7 @@ COMMANDS = {
     "pentest": "targeted non-destructive verification of findings (active checks need --active)",
     "internal": "white-box analysis of the host over SSH (read-only)",
     "report": "rebuild report.md and findings.csv from saved results",
-    "all": "check + external + pentest + internal + report",
+    "all": "check + internal + external + pentest + report",
 }
 
 
@@ -111,7 +111,9 @@ def main(argv: list[str] | None = None) -> int:
             if rc != EXIT_OK:
                 print("check reported failures: continuing, affected modules will be marked 'Not assessed'",
                       file=sys.stderr)
-            for phase in ("external", "pentest", "internal"):
+            # internal first: external/pentest probe sshd unauthenticated (ssh-audit, Nuclei, PT), which
+            # OpenSSH >= 9.8 penalizes (PerSourcePenalties) by refusing the auditor's IP for a while
+            for phase in ("internal", "external", "pentest"):
                 _phase(ctx, phase)
             _report(ctx)
             return EXIT_OK
